@@ -40,3 +40,4 @@ IMC <- function(p,a){
 }
 
 IMC(69,1.70)
+install.packages("rmarkdown")
