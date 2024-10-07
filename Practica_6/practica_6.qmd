@@ -1,8 +1,13 @@
 ---
-title: "practica_6"
-author: "Euler"
-format: html
-editor: visual
+title: "Proctica 6"
+author: "Euler Gomez Torres"
+format:
+  html:
+    toc: true
+    toc-location: left
+    number-sections: true
+    embed-resources: true
+    output-file: index
 ---
 
 ## Quarto
@@ -38,3 +43,8 @@ The `echo: false` option disables the printing of code (only output is displayed
 Este es are de una circunferencia $$Area_c=pi\cdot r^2$$
 
 Esta es una formula cualquiera $$\frac{\left[\left(2x-1\right)^2-1\right]}{4}=k$$
+
+# Mi primera pagina web
+1.Tener mi proyecto
+1. Conectar mi poyecto a Github
+1. tener un archivo en formato html lamado `index.html`
