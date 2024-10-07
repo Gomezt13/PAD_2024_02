@@ -48,3 +48,4 @@ Esta es una formula cualquiera $$\frac{\left[\left(2x-1\right)^2-1\right]}{4}=k$
 1.Tener mi proyecto
 1. Conectar mi poyecto a Github
 1. tener un archivo en formato html lamado `index.html`
+1. hacer push
