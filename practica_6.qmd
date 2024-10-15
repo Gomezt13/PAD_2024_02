@@ -81,4 +81,9 @@ anova(modelo)
 plot(modelo)
 
 ```
+### Boxplot
+```{r}
+ggplot(fb, aes(x = geno , y = lfa, colour = riego)) + geom_boxplot(outlier.colour = "red",outlier.shape = 16, outlier.size = 2) + labs(title = "Boxplot con interacción de niveles de riego y genotipo", x = "interacción Riego y Genotipo", y = "Area Foliar en cm^2") + theme_minimal() + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
 
