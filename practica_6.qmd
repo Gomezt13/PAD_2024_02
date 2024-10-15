@@ -49,3 +49,36 @@ Esta es una formula cualquiera $$\frac{\left[\left(2x-1\right)^2-1\right]}{4}=k$
 1. Conectar mi poyecto a Github
 1. tener un archivo en formato html lamado `index.html`
 1. hacer push
+
+# Modelos liniales mixtos
+
+
+##importar
+```{r}
+
+source('https://inkaverse.com/setup.r')
+
+library(inti)
+library(googlesheets4)
+
+url <- "https://docs.google.com/spreadsheets/d/15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit?gid=172957346#gid=172957346"
+
+gs <- as_sheets_id(url)
+
+fb <- googlesheets4::range_read(ss = gs, sheet = "fb")
+
+str(fb)
+
+```
+## Modelo lineal
+
+```{r}
+modelo <- aov(formula = lfa ~ bloque + riego + geno + riego*geno
+          , data = fb)
+
+anova(modelo)
+
+plot(modelo)
+
+```
+
