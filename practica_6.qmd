@@ -45,15 +45,17 @@ Este es are de una circunferencia $$Area_c=pi\cdot r^2$$
 Esta es una formula cualquiera $$\frac{\left[\left(2x-1\right)^2-1\right]}{4}=k$$
 
 # Mi primera pagina web
-1.Tener mi proyecto
-1. Conectar mi poyecto a Github
-1. tener un archivo en formato html lamado `index.html`
-1. hacer push
+
+1. Tener mi proyecto
+2. Conectar mi poyecto a Github
+3. tener un archivo en formato html lamado `index.html`
+4. hacer push
 
 # Modelos liniales mixtos
 
 
 ##importar
+
 ```{r}
 
 source('https://inkaverse.com/setup.r')
@@ -82,8 +84,46 @@ plot(modelo)
 
 ```
 ### Boxplot
+
 ```{r}
 ggplot(fb, aes(x = geno , y = lfa, colour = riego)) + geom_boxplot(outlier.colour = "red",outlier.shape = 16, outlier.size = 2) + labs(title = "Boxplot con interacción de niveles de riego y genotipo", x = "interacción Riego y Genotipo", y = "Area Foliar en cm^2") + theme_minimal() + theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
+## Modelo lineal
+
+```{r}
+modelo_1 <- aov(formula = hi ~ bloque + riego + geno + riego*geno
+          , data = fb)
+
+anova(modelo_1)
+
+plot(modelo_1)
+
+```
+### Boxplot
+
+```{r}
+ggplot(fb, aes(x = geno , y = hi, colour = riego)) + geom_boxplot(outlier.colour = "red",outlier.shape = 16, outlier.size = 2) + labs(title = "Boxplot con interacción de niveles de riego y genotipo", x = "interacción Riego y Genotipo", y = "Índice de cosecha") + theme_minimal() + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+## Modelo lineal mixto
+```{r}
+library(lme4)
+model <- lmer(formula = lfa ~ riego + geno + riego*geno + (1 | bloque), data = fb)
+
+anova(model)
+
+plot(model)
+
+ol <- boxplot(lfa ~  riego*geno , fb)
+
+ol
+
+```
+
+```{r}
+mod <- remove_outliers(data = fb, formula = lfa ~ riego + geno + riego*geno + (1 | bloque), plot_diag = T)
+
+mod
+```
 
