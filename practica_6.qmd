@@ -54,6 +54,7 @@ Esta es una formula cualquiera $$\frac{\left[\left(2x-1\right)^2-1\right]}{4}=k$
 # Modelos liniales mixtos
 
 
+
 ##importar
 
 ```{r}
@@ -125,5 +126,41 @@ ol
 mod <- remove_outliers(data = fb, formula = lfa ~ riego + geno + riego*geno + (1 | bloque), plot_diag = T)
 
 mod
+```
+# Comparacion de media
+
+```{r}
+modeloo <- lm(formula = lfa ~ bloque + riego + geno + riego*geno
+          , data = fb)
+
+anova(modeloo)
+
+```
+
+## Prueba de Tukey
+
+```{r}
+library(agricolae)
+
+tukey_result <- HSD.test(modeloo, c("geno", "riego"), group = TRUE)
+
+tukey_result
+
+print(tukey_result)
+
+plot(tukey_result)
+
+grupos <- tukey_result$groups %>% 
+  rownames_to_column("tratamientos") %>% 
+  separate(tratamientos, into= c("geno","riego"), sep = ":")
+
+str(grupos)
+
+ggplot(grupos, aes(x = geno, y = lfa, fill = riego)) +
+  geom_bar(stat = "identity", position = "dodge", color = "skyblue") +
+  labs(x = "Genotipo", y = "LFA", fill=("Riego")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + ggtitle("Gráfico de barras: LFA por genotipo y riego")
+
 ```
 
