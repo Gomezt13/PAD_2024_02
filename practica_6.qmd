@@ -157,10 +157,51 @@ grupos <- tukey_result$groups %>%
 str(grupos)
 
 ggplot(grupos, aes(x = geno, y = lfa, fill = riego)) +
-  geom_bar(stat = "identity", position = "dodge", color = "skyblue") +
+  geom_bar(stat = "identity", position = "dodge", color = "skyblue") + geom_text(aes(label = groups), position = position_dodge(width = 0.9), vjust = -0.5) +  # Aquí se añaden las etiquetas de 'groups' encima de las barras
   labs(x = "Genotipo", y = "LFA", fill=("Riego")) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) + ggtitle("Gráfico de barras: LFA por genotipo y riego")
 
 ```
+
+# emeans comparación de medias
+
+```{r}
+library(emmeans)
+library(multcomp)
+
+models <- lmer(formula = hi ~ (1 | bloque) + riego*geno, data = fb)
+
+anova(models)
+
+cm1 <- emmeans(models, ~ geno | riego) %>% 
+  cld(Letters = letters, reversed = T)
+
+cm
+
+cm2 <- emmeans(models, ~ riego | geno) %>% 
+  cld(Letters = letters, reversed = T)
+
+cm2
+
+cm3 <- emmeans(models, ~ riego * geno) %>% 
+  cld(Letters = letters, reversed = T)
+
+cm3
+```
+## graficos
+
+```{r}
+cm1_df <- as.data.frame(cm3) %>% 
+  rename(sig = ".group")
+
+ggplot(cm1_df, aes(x = geno, y = emmean, fill = riego)) +
+  geom_bar(stat = "identity", position = "dodge", color = "skyblue") +
+  geom_text(aes(label = sig, y = emmean), position = position_dodge(width = 0.9), vjust = -0.5) +
+  labs(x = "Genotipo", y = "Media estimada (emmeans)", fill = "Riego") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ggtitle("Gráfico de medias estimadas por genotipo y riego")
+```
+
 
