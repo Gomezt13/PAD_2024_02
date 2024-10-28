@@ -204,4 +204,63 @@ ggplot(cm1_df, aes(x = geno, y = emmean, fill = riego)) +
   ggtitle("Gráfico de medias estimadas por genotipo y riego")
 ```
 
+# Analisis multivariado
+```{r}
+str(fb)
+```
+## Correlación
+```{r}
+# Selecciona solo las columnas numéricas para evitar errores
+numeric_data <- fb[, sapply(fb, is.numeric)]
+cor_matrix <- cor(numeric_data)
+
+# Ver la matriz de correlación
+print(cor_matrix)
+
+
+```
+## Visualización de la matriz de correlación
+
+```{r}
+fb %>% 
+  select_if(is.numeric) %>% 
+  dplyr::select(!c("block")) %>% 
+  pairs.panels(x = .
+               , hist.col = "red"
+               , pch = 21
+               , stars = TRUE
+               , scale = TRUE
+               ,lm = TRUE
+               )
+```
+Otro
+
+```{r}
+library(psych)
+pairs.panels(fb, 
+             pch=20,
+             stars=T,
+             main="Gráfico de Correlación")
+
+```
+## Análisis de Componentes Principales (PCA)
+```{r}
+# Cargar librerías necesarias
+library(dplyr)
+library(FactoMineR)
+
+mv <- fb %>% 
+  group_by(riego, geno) %>% 
+  summarise(across(where(is.numeric), ~ mean(., na.rm = TRUE))) %>% 
+  PCA(scale.unit = T, quali.sup = c(1:4), graph = F)
+
+p1 <- plot (mv
+     , choix="ind"
+     , habillage=1)
+p2 <- plot (mv
+     , choix="var")
+list(p1, p2) %>% 
+  plot_grid(plotlist = ., nrow = 1)
+
+```
 
