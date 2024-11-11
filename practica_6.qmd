@@ -263,4 +263,38 @@ list(p1, p2) %>%
   plot_grid(plotlist = ., nrow = 1)
 
 ```
+# Graficos en ggplot1
+## Graficos en data cruda
+## Bpx plot
+```{r}
+fb %>% 
+  ggplot(data = ., aes(x = geno, y = hi, color = riego)) +
+  geom_boxplot() + 
+  labs(x = "Genotipos" 
+       , y = "Indice de cosechas"
+       , color = "Tratamiento"
+       , title = "Eficiencia de uso de agua en papa"
+       , subtitle = "Indice de cosecha"
+       , caption = "n = 150") + 
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+# Crear el gráfico de dispersión
+```{r}
+ggplot(fb, aes(x = biomdw, y = tubdw, color = riego)) +
+  geom_point() +
+  geom_smooth(method = lm)
+  labs(title = "Eficiencia de uso de Agau en tuberculos", x = "Peso seco de biomasa", y = "Peso seco de tuberculo", color = "Tratamiento") +
+  theme_minimal()
+```
+
+## Datos resumidos
+```{r}
+grupos %>% 
+  ggplot(data = .
+         , aes(x = geno, y = lfa, fill = riego)) +
+  geom_col()
+  
+
+```
 
