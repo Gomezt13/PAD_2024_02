@@ -279,7 +279,8 @@ fb %>%
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 ```
-# Crear el gráfico de dispersión
+### Scatter plot
+
 ```{r}
 ggplot(fb, aes(x = biomdw, y = tubdw, color = riego)) +
   geom_point() +
